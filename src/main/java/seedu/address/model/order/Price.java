@@ -58,4 +58,8 @@ public class Price {
         return value.hashCode();
     }
 
+    public String getValue() {
+        return this.value;
+    }
+
 }

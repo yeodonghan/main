@@ -45,6 +45,22 @@ public class Order implements Cloneable {
         this.tags.addAll(tags);
     }
 
+    /**
+     * Every field must be present and not null.
+     * @throws CloneNotSupportedException If Customer/Phone class does not implement Cloneable interface.
+     */
+    public Order(Customer customer, Phone phone, Price price, Status status, Schedule schedule, Set<Tag> tags) throws
+            CloneNotSupportedException {
+        requireAllNonNull(customer, phone, price, status, tags);
+        this.id = UUID.randomUUID();
+        this.customer = (Customer) customer.clone();
+        this.phone = (Phone) phone.clone();
+        this.price = price;
+        this.status = status;
+        this.schedule = schedule;
+        this.tags.addAll(tags);
+    }
+
     public UUID getId() {
         return id;
     }
