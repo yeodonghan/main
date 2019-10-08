@@ -32,9 +32,8 @@ public class Order implements Cloneable {
 
     /**
      * Every field must be present and not null.
-     * @throws CloneNotSupportedException If Customer/Phone class does not implement Cloneable interface.
      */
-    public Order(Customer customer, Phone phone, Price price, Set<Tag> tags) throws CloneNotSupportedException {
+    public Order(Customer customer, Phone phone, Price price, Set<Tag> tags) {
         requireAllNonNull(customer, phone, price, tags);
         this.id = UUID.randomUUID();
         this.customer = (Customer) customer.clone();
@@ -46,15 +45,28 @@ public class Order implements Cloneable {
     }
 
     /**
-     * Every field must be present and not null.
-     * @throws CloneNotSupportedException If Customer/Phone class does not implement Cloneable interface.
+     * Constructor for OrderBuilder to create an object with corresponding data fields with random UUID.
      */
-    public Order(UUID id, Customer customer, Phone phone, Price price, Status status, Schedule schedule,
-                 Set<Tag> tags) throws CloneNotSupportedException {
-        requireAllNonNull(customer, phone, price, status, tags);
-        this.id = id;
+    public Order(Customer customer, Phone phone, Price price, Status status, Schedule schedule, Set<Tag> tags) {
+        requireAllNonNull(customer, phone, price, tags);
+        this.id = UUID.randomUUID();
         this.customer = (Customer) customer.clone();
         this.phone = (Phone) phone.clone();
+        this.price = price;
+        this.status = status;
+        this.schedule = schedule;
+        this.tags.addAll(tags);
+    }
+
+    /**
+     * Private constructor to make a cloned Order.
+     */
+    private Order(UUID id, Customer customer, Phone phone, Price price, Status status, Schedule schedule,
+                  Set<Tag> tags) {
+        requireAllNonNull(id, customer, phone, price, status, tags);
+        this.id = id;
+        this.customer = customer;
+        this.phone = phone;
         this.price = price;
         this.status = status;
         this.schedule = schedule;
@@ -107,7 +119,7 @@ public class Order implements Cloneable {
     }
 
     /**
-     * Returns true if both orders have the same identity and data fields.
+     * Returns true if both orders have the same data fields.
      * This defines a stronger notion of equality between two orders.
      */
     @Override
@@ -121,18 +133,24 @@ public class Order implements Cloneable {
         }
 
         Order otherOrder = (Order) other;
-        return otherOrder.getId().equals(getId())
-                && otherOrder.getCustomer().equals(getCustomer())
+        return otherOrder.getCustomer().equals(getCustomer())
                 && otherOrder.getPhone().equals(getPhone())
                 && otherOrder.getPrice().equals(getPrice())
                 && otherOrder.getStatus().equals(getStatus())
-                && otherOrder.getSchedule().equals(getSchedule())
                 && otherOrder.getTags().equals((getTags()));
     }
 
     @Override
-    public Object clone() throws CloneNotSupportedException {
-        return super.clone();
+    public Object clone() {
+        Order clone;
+        if (schedule == null) {
+            clone = new Order(this.id, (Customer) this.customer.clone(), (Phone) this.phone.clone(),
+                    (Price) this.price.clone(), this.status, null, this.getTags());
+        } else {
+            clone = new Order(this.id, (Customer) this.customer.clone(), (Phone) this.phone.clone(),
+                    (Price) this.price.clone(), this.status, (Schedule) this.schedule.clone(), this.getTags());
+        }
+        return clone;
     }
 
     @Override
