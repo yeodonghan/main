@@ -1,9 +1,6 @@
 package seedu.address.storage;
 
-import java.util.ArrayList;
-import java.util.HashSet;
-import java.util.List;
-import java.util.Set;
+import java.util.*;
 import java.util.stream.Collectors;
 
 import com.fasterxml.jackson.annotation.JsonCreator;
@@ -25,6 +22,7 @@ class JsonAdaptedOrder {
 
     public static final String MISSING_FIELD_MESSAGE_FORMAT = "Order's %s field is missing!";
 
+    private final UUID id;
     private final Customer customer;
     private final Phone phone;
     private final Price price;
@@ -36,10 +34,12 @@ class JsonAdaptedOrder {
      * Constructs a {@code JsonAdaptedOrder} with the given person details.
      */
     @JsonCreator
-    public JsonAdaptedOrder(@JsonProperty("customer") Customer customer, @JsonProperty("phone") Phone phone,
+    public JsonAdaptedOrder(@JsonProperty("id") UUID id, @JsonProperty("customer") Customer customer,
+                             @JsonProperty("phone") Phone phone,
                              @JsonProperty("price") Price price, @JsonProperty("status") Status status,
                              @JsonProperty("schedule") Schedule schedule,
                              @JsonProperty("tagged") List<JsonAdaptedTag> tagged) {
+        this.id = id;
         this.customer = customer;
         this.phone = phone;
         this.price = price;
@@ -54,6 +54,7 @@ class JsonAdaptedOrder {
      * Converts a given {@code Person} into this class for Jackson use.
      */
     public JsonAdaptedOrder(Order source) {
+        id = source.getId();
         customer = source.getCustomer();
         phone = source.getPhone();
         price = source.getPrice();
@@ -75,6 +76,7 @@ class JsonAdaptedOrder {
             orderTags.add(tag.toModelType());
         }
 
+        final UUID modelId = id;
         final Customer modelCustomer = (Customer) customer.clone();
         final Phone modelPhone = (Phone) phone.clone();
         final Price modelPrice = new Price(price.getValue());
@@ -82,7 +84,7 @@ class JsonAdaptedOrder {
         final Schedule modelSchedule = new Schedule(schedule.getOrder(), schedule.getCalendar(), schedule.getVenue(),
                 schedule.getTags());
         final Set<Tag> modelTags = new HashSet<>(orderTags);
-        return new Order(modelCustomer, modelPhone, modelPrice, modelStatus, modelSchedule, modelTags);
+        return new Order(modelId, modelCustomer, modelPhone, modelPrice, modelStatus, modelSchedule, modelTags);
     }
 
 }

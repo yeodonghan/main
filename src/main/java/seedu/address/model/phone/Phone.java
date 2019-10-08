@@ -39,6 +39,18 @@ public class Phone implements Cloneable {
         this.tags.addAll(tags);
     }
 
+    public Phone(UUID id, Name name, Brand brand, Capacity capacity, Colour colour, Cost cost,
+                 Set<Tag> tags) {
+        requireAllNonNull(name, brand, capacity, colour, cost, tags);
+        this.id = id;
+        this.name = name;
+        this.brand = brand;
+        this.capacity = capacity;
+        this.colour = colour;
+        this.cost = cost;
+        this.tags.addAll(tags);
+    }
+
     public UUID getId() {
         return id;
     }
