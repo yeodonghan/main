@@ -57,7 +57,7 @@ class JsonAdaptedCustomer {
     }
 
     /**
-     * Converts this Jackson-friendly adapted person object into the model's {@code Customer} object.
+     * Converts this Jackson-friendly adapted Customer object into the model's {@code Customer} object.
      *
      * @throws IllegalValueException if there were any data constraints violated in the adapted Customer.
      */

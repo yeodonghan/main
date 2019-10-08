@@ -31,7 +31,7 @@ class JsonAdaptedOrder {
     private final List<JsonAdaptedTag> tagged = new ArrayList<>();
 
     /**
-     * Constructs a {@code JsonAdaptedOrder} with the given person details.
+     * Constructs a {@code JsonAdaptedOrder} with the given order details.
      */
     @JsonCreator
     public JsonAdaptedOrder(@JsonProperty("id") UUID id, @JsonProperty("customer") Customer customer,
@@ -51,7 +51,7 @@ class JsonAdaptedOrder {
     }
 
     /**
-     * Converts a given {@code Person} into this class for Jackson use.
+     * Converts a given {@code Order} into this class for Jackson use.
      */
     public JsonAdaptedOrder(Order source) {
         id = source.getId();
@@ -66,9 +66,9 @@ class JsonAdaptedOrder {
     }
 
     /**
-     * Converts this Jackson-friendly adapted person object into the model's {@code Person} object.
+     * Converts this Jackson-friendly adapted person object into the model's {@code Order} object.
      *
-     * @throws IllegalValueException if there were any data constraints violated in the adapted person.
+     * @throws IllegalValueException if there were any data constraints violated in the adapted Order.
      */
     public Order toModelType() throws IllegalValueException, CloneNotSupportedException {
         final List<Tag> orderTags = new ArrayList<>();

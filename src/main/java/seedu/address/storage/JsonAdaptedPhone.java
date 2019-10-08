@@ -31,7 +31,7 @@ class JsonAdaptedPhone {
     private final List<JsonAdaptedTag> tagged = new ArrayList<>();
 
     /**
-     * Constructs a {@code JsonAdaptedPhone} with the given person details.
+     * Constructs a {@code JsonAdaptedPhone} with the given phone details.
      */
     @JsonCreator
     public JsonAdaptedPhone(@JsonProperty("id") UUID id, @JsonProperty("name") Name name,
@@ -65,7 +65,7 @@ class JsonAdaptedPhone {
     }
 
     /**
-     * Converts this Jackson-friendly adapted person object into the model's {@code Phone} object.
+     * Converts this Jackson-friendly adapted phone object into the model's {@code Phone} object.
      *
      * @throws IllegalValueException if there were any data constraints violated in the adapted phone.
      */
