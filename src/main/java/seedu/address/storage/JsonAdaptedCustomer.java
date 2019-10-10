@@ -12,8 +12,8 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 import seedu.address.commons.exceptions.IllegalValueException;
 import seedu.address.model.customer.ContactNumber;
 import seedu.address.model.customer.Customer;
+import seedu.address.model.customer.CustomerName;
 import seedu.address.model.customer.Email;
-import seedu.address.model.customer.Name;
 import seedu.address.model.tag.Tag;
 
 /**
@@ -23,7 +23,7 @@ class JsonAdaptedCustomer {
 
     public static final String MISSING_FIELD_MESSAGE_FORMAT = "Customer's %s field is missing!";
 
-    private final Name name;
+    private final CustomerName customerName;
     private final ContactNumber contactNumber;
     private final Email email;
     private final List<JsonAdaptedTag> tagged = new ArrayList<>();
@@ -32,11 +32,11 @@ class JsonAdaptedCustomer {
      * Constructs a {@code JsonAdaptedCustomer} with the given person details.
      */
     @JsonCreator
-    public JsonAdaptedCustomer(@JsonProperty("name") Name name,
+    public JsonAdaptedCustomer(@JsonProperty("customerName") CustomerName customerName,
                              @JsonProperty("contactNumber") ContactNumber contactNumber,
                              @JsonProperty("email") Email email,
                              @JsonProperty("tagged") List<JsonAdaptedTag> tagged) {
-        this.name = name;
+        this.customerName = customerName;
         this.contactNumber = contactNumber;
         this.email = email;
         if (tagged != null) {
@@ -48,7 +48,7 @@ class JsonAdaptedCustomer {
      * Converts a given {@code Customer} into this class for Jackson use.
      */
     public JsonAdaptedCustomer(Customer source) {
-        name = source.getName();
+        customerName = source.getCustomerName();
         contactNumber = source.getContactNumber();
         email = source.getEmail();
         tagged.addAll(source.getTags().stream()
@@ -67,13 +67,13 @@ class JsonAdaptedCustomer {
             customerTags.add(tag.toModelType());
         }
 
-        if (name == null) {
-            throw new IllegalValueException(String.format(MISSING_FIELD_MESSAGE_FORMAT, Name.class.getSimpleName()));
+        if (customerName == null) {
+            throw new IllegalValueException(String.format(MISSING_FIELD_MESSAGE_FORMAT, CustomerName.class.getSimpleName()));
         }
-        if (!Name.isValidName(name.toString())) {
-            throw new IllegalValueException(Name.MESSAGE_CONSTRAINTS);
+        if (!CustomerName.isValidCustomerName(customerName.toString())) {
+            throw new IllegalValueException(customerName.MESSAGE_CONSTRAINTS);
         }
-        final Name modelName = new Name(name.toString());
+        final CustomerName modelName = new CustomerName(customerName.toString());
 
         final ContactNumber modelContactNumber = new ContactNumber(contactNumber.toString());
 

@@ -7,12 +7,8 @@ import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonProperty;
 
 import seedu.address.commons.exceptions.IllegalValueException;
-import seedu.address.model.phone.Phone;
-import seedu.address.model.phone.Name;
-import seedu.address.model.phone.Brand;
-import seedu.address.model.phone.Capacity;
-import seedu.address.model.phone.Colour;
-import seedu.address.model.phone.Cost;
+import seedu.address.model.phone.*;
+import seedu.address.model.phone.PhoneName;
 import seedu.address.model.tag.Tag;
 
 /**
@@ -23,7 +19,7 @@ class JsonAdaptedPhone {
     public static final String MISSING_FIELD_MESSAGE_FORMAT = "Phone's %s field is missing!";
 
     private final UUID id;
-    private final Name name;
+    private final PhoneName phoneName;
     private final Brand brand;
     private final Capacity capacity;
     private final Colour colour;
@@ -34,12 +30,12 @@ class JsonAdaptedPhone {
      * Constructs a {@code JsonAdaptedPhone} with the given phone details.
      */
     @JsonCreator
-    public JsonAdaptedPhone(@JsonProperty("id") UUID id, @JsonProperty("name") Name name,
+    public JsonAdaptedPhone(@JsonProperty("id") UUID id, @JsonProperty("phoneName") PhoneName phoneName,
                              @JsonProperty("brand") Brand brand,
                              @JsonProperty("capacity") Capacity capacity, @JsonProperty("colour") Colour colour,
                              @JsonProperty("cost") Cost cost, @JsonProperty("tagged") List<JsonAdaptedTag> tagged) {
         this.id = id;
-        this.name = name;
+        this.phoneName = phoneName;
         this.brand = brand;
         this.capacity = capacity;
         this.colour = colour;
@@ -54,7 +50,7 @@ class JsonAdaptedPhone {
      */
     public JsonAdaptedPhone(Phone source) {
         id = source.getId();
-        name = source.getName();
+        phoneName = source.getPhoneName();
         brand = source.getBrand();
         capacity = source.getCapacity();
         colour = source.getColour();
@@ -77,13 +73,13 @@ class JsonAdaptedPhone {
 
         final UUID modelId = id;
 
-        if (name == null) {
-            throw new IllegalValueException(String.format(MISSING_FIELD_MESSAGE_FORMAT, Name.class.getSimpleName()));
+        if (phoneName == null) {
+            throw new IllegalValueException(String.format(MISSING_FIELD_MESSAGE_FORMAT, PhoneName.class.getSimpleName()));
         }
-        if (!Name.isValidName(name.toString())) {
-            throw new IllegalValueException(Name.MESSAGE_CONSTRAINTS);
+        if (!PhoneName.isValidPhoneName(phoneName.toString())) {
+            throw new IllegalValueException(PhoneName.MESSAGE_CONSTRAINTS);
         }
-        final Name modelName = new Name(name.toString());
+        final PhoneName modelPhoneName = new PhoneName(phoneName.toString());
 
         if (brand == null) {
             throw new IllegalValueException(String.format(MISSING_FIELD_MESSAGE_FORMAT, Brand.class.getSimpleName()));
@@ -95,7 +91,7 @@ class JsonAdaptedPhone {
 
         final Capacity modelCapacity = capacity;
 
-        if (Colour == null) {
+        if (colour == null) {
             throw new IllegalValueException(String.format(MISSING_FIELD_MESSAGE_FORMAT, Colour.class.getSimpleName()));
         }
         if (!Colour.isValidColour(colour.toString())) {
@@ -112,7 +108,7 @@ class JsonAdaptedPhone {
         final Cost modelCost = new Cost(cost.toString());
 
         final Set<Tag> modelTags = new HashSet<>(phoneTags);
-        return new Phone(modelId, modelName, modelBrand, modelCapacity, modelColour, modelCost, modelTags);
+        return new Phone(modelId, modelPhoneName, modelBrand, modelCapacity, modelColour, modelCost, modelTags);
     }
 
 }

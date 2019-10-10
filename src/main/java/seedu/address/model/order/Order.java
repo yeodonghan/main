@@ -59,9 +59,9 @@ public class Order implements Cloneable {
     }
 
     /**
-     * Private constructor to make a cloned Order.
+     * Public constructor for conversion of Json to model, and for Clone method.
      */
-    private Order(UUID id, Customer customer, Phone phone, Price price, Status status, Schedule schedule,
+    public Order(UUID id, Customer customer, Phone phone, Price price, Status status, Schedule schedule,
                   Set<Tag> tags) {
         requireAllNonNull(id, customer, phone, price, status, tags);
         this.id = id;
