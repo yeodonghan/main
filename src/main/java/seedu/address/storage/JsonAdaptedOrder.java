@@ -1,7 +1,11 @@
 package seedu.address.storage;
 
-import java.util.*;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Set;
+import java.util.UUID;
 import java.util.stream.Collectors;
+import java.util.HashSet;
 
 import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonProperty;
@@ -66,11 +70,11 @@ class JsonAdaptedOrder {
     }
 
     /**
-     * Converts this Jackson-friendly adapted person object into the model's {@code Order} object.
+     * Converts this Jackson-friendly adapted order object into the model's {@code Order} object.
      *
      * @throws IllegalValueException if there were any data constraints violated in the adapted Order.
      */
-    public Order toModelType() throws IllegalValueException, CloneNotSupportedException {
+    public Order toModelType() throws IllegalValueException {
         final List<Tag> orderTags = new ArrayList<>();
         for (JsonAdaptedTag tag : tagged) {
             orderTags.add(tag.toModelType());
