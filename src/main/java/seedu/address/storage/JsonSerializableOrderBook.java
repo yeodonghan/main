@@ -10,7 +10,7 @@ import com.fasterxml.jackson.annotation.JsonRootName;
 
 import seedu.address.commons.exceptions.IllegalValueException;
 import seedu.address.model.OrderBook;
-import seedu.address.model.ReadOnlyOrderBook;
+import seedu.address.model.ReadOnlyDataBook;
 import seedu.address.model.order.Order;
 
 /**
@@ -36,8 +36,8 @@ class JsonSerializableOrderBook {
      *
      * @param source future changes to this will not affect the created {@code JsonSerializableOrderBook}.
      */
-    public JsonSerializableOrderBook(ReadOnlyOrderBook source) {
-        orders.addAll(source.getOrderList().stream().map(JsonAdaptedOrder::new).collect(Collectors.toList()));
+    public JsonSerializableOrderBook(ReadOnlyDataBook<Order> source) {
+        orders.addAll(source.getList().stream().map(JsonAdaptedOrder::new).collect(Collectors.toList()));
     }
 
     /**

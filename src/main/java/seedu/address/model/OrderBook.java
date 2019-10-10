@@ -12,7 +12,7 @@ import seedu.address.model.order.UniqueOrderList;
  * Wraps all data at the order-book level
  * Duplicates are not allowed (by .isSameOrder comparison)
  */
-public class OrderBook implements ReadOnlyOrderBook {
+public class OrderBook implements ReadOnlyDataBook {
 
     private final UniqueOrderList orders;
 
@@ -102,7 +102,7 @@ public class OrderBook implements ReadOnlyOrderBook {
     }
 
     @Override
-    public ObservableList<Order> getOrderList() {
+    public ObservableList<Order> getList() {
         return orders.asUnmodifiableObservableList();
     }
 

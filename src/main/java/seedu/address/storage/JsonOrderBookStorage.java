@@ -12,8 +12,7 @@ import seedu.address.commons.exceptions.DataConversionException;
 import seedu.address.commons.exceptions.IllegalValueException;
 import seedu.address.commons.util.FileUtil;
 import seedu.address.commons.util.JsonUtil;
-import seedu.address.model.ReadOnlyAddressBook;
-import seedu.address.model.ReadOnlyOrderBook;
+import seedu.address.model.ReadOnlyDataBook;
 
 /**
  * A class to access Order data stored as a json file on the hard disk.
@@ -33,7 +32,7 @@ public class JsonOrderBookStorage implements OrderBookStorage {
     }
 
     @Override
-    public Optional<ReadOnlyOrderBook> readOrderBook() throws DataConversionException {
+    public Optional<ReadOnlyDataBook> readOrderBook() throws DataConversionException {
         return readOrderBook(filePath);
     }
 
@@ -43,7 +42,7 @@ public class JsonOrderBookStorage implements OrderBookStorage {
      * @param filePath location of the data. Cannot be null.
      * @throws DataConversionException if the file is not in the correct format.
      */
-    public Optional<ReadOnlyOrderBook> readOrderBook(Path filePath) throws DataConversionException {
+    public Optional<ReadOnlyDataBook> readOrderBook(Path filePath) throws DataConversionException {
         requireNonNull(filePath);
 
         Optional<JsonSerializableOrderBook> jsonOrderBook = JsonUtil.readJsonFile(
@@ -61,16 +60,16 @@ public class JsonOrderBookStorage implements OrderBookStorage {
     }
 
     @Override
-    public void saveOrderBook(ReadOnlyOrderBook orderBook) throws IOException {
+    public void saveOrderBook(ReadOnlyDataBook orderBook) throws IOException {
         saveOrderBook(orderBook, filePath);
     }
 
     /**
-     * Similar to {@link #saveOrderBook(ReadOnlyOrderBook)}.
+     * Similar to {@link #saveOrderBook(ReadOnlyDataBook)}.
      *
      * @param filePath location of the data. Cannot be null.
      */
-    public void saveOrderBook(ReadOnlyOrderBook orderBook, Path filePath) throws IOException {
+    public void saveOrderBook(ReadOnlyDataBook orderBook, Path filePath) throws IOException {
         requireNonNull(orderBook);
         requireNonNull(filePath);
 
