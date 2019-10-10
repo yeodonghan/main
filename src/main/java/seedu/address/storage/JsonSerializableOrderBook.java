@@ -46,15 +46,15 @@ class JsonSerializableOrderBook {
      * @throws IllegalValueException if there were any data constraints violated.
      */
     public OrderBook toModelType() throws IllegalValueException {
-        OrderBook OrderBook = new OrderBook();
+        OrderBook orderBook = new OrderBook();
         for (JsonAdaptedOrder jsonAdaptedOrder : orders) {
             Order order = jsonAdaptedOrder.toModelType();
-            if (OrderBook.hasOrder(order)) {
+            if (orderBook.hasOrder(order)) {
                 throw new IllegalValueException(MESSAGE_DUPLICATE_ORDER);
             }
-            OrderBook.addOrder(order);
+            orderBook.addOrder(order);
         }
-        return OrderBook;
+        return orderBook;
     }
 
 }

@@ -68,7 +68,8 @@ class JsonAdaptedCustomer {
         }
 
         if (customerName == null) {
-            throw new IllegalValueException(String.format(MISSING_FIELD_MESSAGE_FORMAT, CustomerName.class.getSimpleName()));
+            throw new IllegalValueException(String.format(MISSING_FIELD_MESSAGE_FORMAT,
+                    CustomerName.class.getSimpleName()));
         }
         if (!CustomerName.isValidCustomerName(customerName.toString())) {
             throw new IllegalValueException(customerName.MESSAGE_CONSTRAINTS);

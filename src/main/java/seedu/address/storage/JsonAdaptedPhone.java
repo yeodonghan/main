@@ -1,13 +1,21 @@
 package seedu.address.storage;
 
-import java.util.*;
+import java.util.ArrayList;
+import java.util.HashSet;
+import java.util.List;
+import java.util.UUID;
 import java.util.stream.Collectors;
+import java.util.Set;
 
 import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonProperty;
 
 import seedu.address.commons.exceptions.IllegalValueException;
-import seedu.address.model.phone.*;
+import seedu.address.model.phone.Brand;
+import seedu.address.model.phone.Capacity;
+import seedu.address.model.phone.Colour;
+import seedu.address.model.phone.Cost;
+import seedu.address.model.phone.Phone;
 import seedu.address.model.phone.PhoneName;
 import seedu.address.model.tag.Tag;
 
@@ -74,7 +82,8 @@ class JsonAdaptedPhone {
         final UUID modelId = id;
 
         if (phoneName == null) {
-            throw new IllegalValueException(String.format(MISSING_FIELD_MESSAGE_FORMAT, PhoneName.class.getSimpleName()));
+            throw new IllegalValueException(String.format(MISSING_FIELD_MESSAGE_FORMAT,
+                    PhoneName.class.getSimpleName()));
         }
         if (!PhoneName.isValidPhoneName(phoneName.toString())) {
             throw new IllegalValueException(PhoneName.MESSAGE_CONSTRAINTS);
