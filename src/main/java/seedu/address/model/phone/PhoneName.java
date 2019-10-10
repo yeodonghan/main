@@ -25,6 +25,7 @@ public class PhoneName implements Cloneable {
      *
      * @param phoneName A valid name.
      */
+
     public PhoneName(String phoneName) {
         requireNonNull(phoneName);
         checkArgument(isValidPhoneName(phoneName), MESSAGE_CONSTRAINTS);
@@ -57,7 +58,7 @@ public class PhoneName implements Cloneable {
     }
 
     @Override
-    protected Object clone() {
+    protected PhoneName clone() {
         return new PhoneName(new String(fullName));
     }
 
