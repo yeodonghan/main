@@ -13,6 +13,7 @@ import seedu.address.commons.exceptions.IllegalValueException;
 import seedu.address.commons.util.FileUtil;
 import seedu.address.commons.util.JsonUtil;
 import seedu.address.model.ReadOnlyDataBook;
+import seedu.address.model.order.Order;
 
 /**
  * A class to access Order data stored as a json file on the hard disk.
@@ -32,7 +33,7 @@ public class JsonOrderBookStorage implements OrderBookStorage {
     }
 
     @Override
-    public Optional<ReadOnlyDataBook> readOrderBook() throws DataConversionException {
+    public Optional<ReadOnlyDataBook<Order>> readOrderBook() throws DataConversionException {
         return readOrderBook(filePath);
     }
 
@@ -42,7 +43,7 @@ public class JsonOrderBookStorage implements OrderBookStorage {
      * @param filePath location of the data. Cannot be null.
      * @throws DataConversionException if the file is not in the correct format.
      */
-    public Optional<ReadOnlyDataBook> readOrderBook(Path filePath) throws DataConversionException {
+    public Optional<ReadOnlyDataBook<Order>> readOrderBook(Path filePath) throws DataConversionException {
         requireNonNull(filePath);
 
         Optional<JsonSerializableOrderBook> jsonOrderBook = JsonUtil.readJsonFile(
@@ -60,7 +61,7 @@ public class JsonOrderBookStorage implements OrderBookStorage {
     }
 
     @Override
-    public void saveOrderBook(ReadOnlyDataBook orderBook) throws IOException {
+    public void saveOrderBook(ReadOnlyDataBook<Order> orderBook) throws IOException {
         saveOrderBook(orderBook, filePath);
     }
 
@@ -69,7 +70,7 @@ public class JsonOrderBookStorage implements OrderBookStorage {
      *
      * @param filePath location of the data. Cannot be null.
      */
-    public void saveOrderBook(ReadOnlyDataBook orderBook, Path filePath) throws IOException {
+    public void saveOrderBook(ReadOnlyDataBook<Order> orderBook, Path filePath) throws IOException {
         requireNonNull(orderBook);
         requireNonNull(filePath);
 

@@ -11,6 +11,7 @@ import seedu.address.model.ReadOnlyAddressBook;
 import seedu.address.model.ReadOnlyDataBook;
 import seedu.address.model.ReadOnlyUserPrefs;
 import seedu.address.model.UserPrefs;
+import seedu.address.model.order.Order;
 
 /**
  * Manages storage of Key data in local storage.
@@ -86,23 +87,23 @@ public class StorageManager implements Storage {
     }
 
     @Override
-    public Optional<ReadOnlyDataBook> readOrderBook() throws DataConversionException, IOException {
+    public Optional<ReadOnlyDataBook<Order>> readOrderBook() throws DataConversionException, IOException {
         return readOrderBook(orderBookStorage.getOrderBookFilePath());
     }
 
     @Override
-    public Optional<ReadOnlyDataBook> readOrderBook(Path filePath) throws DataConversionException, IOException {
+    public Optional<ReadOnlyDataBook<Order>> readOrderBook(Path filePath) throws DataConversionException, IOException {
         logger.fine("Attempting to read data from file: " + filePath);
         return orderBookStorage.readOrderBook(filePath);
     }
 
     @Override
-    public void saveOrderBook(ReadOnlyDataBook orderBook) throws IOException {
+    public void saveOrderBook(ReadOnlyDataBook<Order> orderBook) throws IOException {
         saveOrderBook(orderBook, orderBookStorage.getOrderBookFilePath());
     }
 
     @Override
-    public void saveOrderBook(ReadOnlyDataBook orderBook, Path filePath) throws IOException {
+    public void saveOrderBook(ReadOnlyDataBook<Order> orderBook, Path filePath) throws IOException {
         logger.fine("Attempting to write to data file: " + filePath);
         orderBookStorage.saveOrderBook(orderBook, filePath);
     }
